@@ -1,6 +1,7 @@
 package com.simple.simpleforgroundservice
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.simple.simpleforgroundservice.backgroundservice.BackgroundService
+import com.simple.simpleforgroundservice.foregroundservice.ForegroundService
 import com.simple.simpleforgroundservice.ui.theme.SimpleForgroundServiceTheme
 
 class BackGroundServiceActivity : ComponentActivity() {
@@ -30,12 +31,16 @@ class BackGroundServiceActivity : ComponentActivity() {
                 ) {
                     BackGroundServiceButton(
                         startService = {
-                            Intent(this, BackgroundService::class.java).also {
-                                startService(it)
+                            Intent(this, ForegroundService::class.java).also {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    startForegroundService(it)
+                                } else {
+                                    startService(it)
+                                }
                             }
                         },
                         stopService = {
-                            Intent(this, BackgroundService::class.java).also {
+                            Intent(this, ForegroundService::class.java).also {
                                 stopService(it)
                             }
                         }
