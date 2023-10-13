@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleForgroundService</string>
+    <string name="title_activity_back_ground_service">BackGroundServiceActivity</string>
 </resources>
